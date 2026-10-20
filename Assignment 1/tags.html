@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML Pro-Ref | Text Formatting Masterclass</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Fira+Code:wght@400;500&display=swap');
+
+        :root {
+            --primary: #2563eb;
+            --primary-hover: #1d4ed8;
+            --bg: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+            --tag-bg: #fee2e2;
+            --tag-color: #991b1b;
+        }
+
+        * { box-sizing: border-box; transition: all 0.2s ease; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg);
+            color: var(--text-main);
+            margin: 0;
+            line-height: 1.6;
+        }
+
+        header {
+            background: var(--card-bg);
+            padding: 2.5rem 10%;
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+        }
+
+        h1 { margin: 0; font-size: 1.8rem; font-weight: 800; }
+        h1 span { color: var(--primary); }
+
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 1.5rem;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        #searchInput {
+            flex: 1;
+            min-width: 300px;
+            padding: 0.8rem 1.2rem;
+            border: 2px solid var(--border);
+            border-radius: 10px;
+            font-size: 1rem;
+            outline: none;
+        }
+
+        #searchInput:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1); }
+
+        .filter-group { display: flex; gap: 0.5rem; }
+
+        .filter-btn {
+            padding: 0.6rem 1.2rem;
+            border: 1px solid var(--border);
+            background: white;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--text-muted);
+        }
+
+        .filter-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        main { padding: 2rem 10%; }
+
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            background: var(--card-bg);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+        }
+
+        th {
+            background: #f1f5f9;
+            padding: 1.2rem;
+            text-align: left;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
+            border-bottom: 2px solid var(--border);
+        }
+
+        td {
+            padding: 1.2rem;
+            border-bottom: 1px solid var(--border);
+            vertical-align: middle;
+        }
+
+        tr:last-child td { border-bottom: none; }
+        tr:hover { background-color: #f8fafc; }
+
+        .tag-name {
+            font-family: 'Fira Code', monospace;
+            background: var(--tag-bg);
+            color: var(--tag-color);
+            padding: 0.3rem 0.6rem;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .category-badge {
+            font-size: 0.75rem;
+            padding: 0.2rem 0.7rem;
+            background: #e0f2fe;
+            color: #0369a1;
+            border-radius: 20px;
+            text-transform: capitalize;
+        }
+
+        .preview-box {
+            padding: 0.8rem;
+            border: 1px dashed var(--border);
+            border-radius: 6px;
+            background: #fafafa;
+            min-width: 120px;
+        }
+
+        .copy-btn {
+            background: #f1f5f9;
+            border: 1px solid var(--border);
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .copy-btn:hover { background: var(--primary); color: white; border-color: var(--primary); }
+
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            color: var(--text-muted);
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            header, main { padding: 1rem 5%; }
+            table { display: block; overflow-x: auto; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>HTML <span>Text Formatting</span> Dictionary</h1>
+        <div class="controls">
+            <input type="text" id="searchInput" placeholder="Search by tag or keyword (e.g. 'bold', 'code')...">
+            <div class="filter-group">
+                <button class="filter-btn active" data-cat="all">All</button>
+                <button class="filter-btn" data-cat="basic">Basic</button>
+                <button class="filter-btn" data-cat="semantic">Semantic</button>
+                <button class="filter-btn" data-cat="technical">Technical</button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <table id="tagTable">
+            <thead>
+                <tr>
+                    <th>Tag</th>
+                    <th>Category</th>
+                    <th>Description</th>
+                    <th>Live Rendering</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody id="tableBody">
+                </tbody>
+        </table>
+        <div id="emptyState" class="empty-state">
+            <h3>No tags found matching your search.</h3>
+        </div>
+    </main>
+
+    <script>
+        const htmlTags = [
+            { tag: '<b>', cat: 'basic', desc: 'Bold text for visual pull without extra importance.', example: 'This is <b>bold</b> text.' },
+            { tag: '<strong>', cat: 'semantic', desc: 'Indicates strong importance. Browsers render as bold.', example: '<strong>Warning:</strong> High Voltage!' },
+            { tag: '<i>', cat: 'basic', desc: 'Italic text for technical terms or thoughts.', example: 'The word <i>Gemini</i> is Latin.' },
+            { tag: '<em>', cat: 'semantic', desc: 'Emphasized text. Browsers render as italics.', example: 'You <em>must</em> see this.' },
+            { tag: '<mark>', cat: 'basic', desc: 'Highlights text (yellow background by default).', example: 'Use a <mark>highlighter</mark>.' },
+            { tag: '<small>', cat: 'basic', desc: 'Smaller text, often for fine print or legal notes.', example: '<small>© 2026 All Rights Reserved.</small>' },
+            { tag: '<del>', cat: 'semantic', desc: 'Represents deleted or removed text.', example: 'Was <del>$50</del> now $20!' },
+            { tag: '<ins>', cat: 'semantic', desc: 'Represents inserted or added text.', example: 'Now only <ins>$20</ins>.' },
+            { tag: '<sub>', cat: 'basic', desc: 'Subscript text (appears lower).', example: 'H<sub>2</sub>O' },
+            { tag: '<sup>', cat: 'basic', desc: 'Superscript text (appears higher).', example: 'E = mc<sup>2</sup>' },
+            { tag: '<code>', cat: 'technical', desc: 'Defines a piece of computer code.', example: '<code>console.log()</code>' },
+            { tag: '<kbd>', cat: 'technical', desc: 'Represents keyboard input.', example: 'Press <kbd>Ctrl</kbd> + <kbd>C</kbd>' },
+            { tag: '<samp>', cat: 'technical', desc: 'Sample output from a computer program.', example: '<samp>Error 404</samp>' },
+            { tag: '<var>', cat: 'technical', desc: 'Variable in mathematical expression.', example: '<var>x</var> = <var>y</var> + 2' },
+            { tag: '<pre>', cat: 'technical', desc: 'Preformatted text. Preserves spaces and breaks.', example: '<pre>Line 1\nLine 2</pre>' },
+            { tag: '<abbr>', cat: 'semantic', desc: 'Abbreviation or acronym with title for tooltip.', example: '<abbr title="HyperText Markup Language">HTML</abbr>' },
+            { tag: '<cite>', cat: 'semantic', desc: 'Defines the title of a creative work.', example: '<cite>The Starry Night</cite> by Van Gogh' },
+            { tag: '<dfn>', cat: 'semantic', desc: 'The defining instance of a term.', example: '<dfn>HTML</dfn> is the standard markup language.' },
+            { tag: '<q>', cat: 'semantic', desc: 'Short inline quotation.', example: 'He said <q>Be yourself</q>.' },
+            { tag: '<blockquote>', cat: 'semantic', desc: 'Block quotation from another source.', example: '<blockquote>Design is how it works.</blockquote>' },
+            { tag: '<address>', cat: 'semantic', desc: 'Contact information for author/owner.', example: '<address>Pune, India</address>' },
+            { tag: '<bdo>', cat: 'technical', desc: 'Bi-Directional Override (text direction).', example: '<bdo dir="rtl">This text goes right to left</bdo>' },
+            { tag: '<ruby>', cat: 'technical', desc: 'Ruby annotation (for East Asian typography).', example: '<ruby>漢 <rt>kan</rt></ruby>' },
+            { tag: '<s>', cat: 'basic', desc: 'Text that is no longer correct or relevant.', example: '<s>Original price $100</s>' },
+            { tag: '<u>', cat: 'basic', desc: 'Unarticulated non-textual annotation (Underline).', example: 'Misspelled <u>word</u>.' },
+            { tag: '<wbr>', cat: 'technical', desc: 'Word Break Opportunity (where a break is okay).', example: 'verylongword<wbr>thatmightbreak' },
+            { tag: '<span>', cat: 'basic', desc: 'Generic inline container for styling.', example: '<span style="color:blue">Blue text</span>' },
+            { tag: '<time>', cat: 'semantic', desc: 'Machine-readable date/time.', example: '<time datetime="2026-02-08">Today</time>' },
+            { tag: '<data>', cat: 'technical', desc: 'Links content with machine-readable translation.', example: '<data value="21051">Product A</data>' },
+            { tag: '<br>', cat: 'basic', desc: 'Single line break.', example: 'Line 1<br>Line 2' },
+            { tag: '<hr>', cat: 'basic', desc: 'Horizontal thematic break.', example: '<hr>' }
+        ];
+
+        const tableBody = document.getElementById('tableBody');
+        const searchInput = document.getElementById('searchInput');
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const emptyState = document.getElementById('emptyState');
+
+        function renderTable(data) {
+            if (data.length === 0) {
+                tableBody.innerHTML = '';
+                emptyState.style.display = 'block';
+                return;
+            }
+            emptyState.style.display = 'none';
+            tableBody.innerHTML = data.map(item => `
+                <tr>
+                    <td><span class="tag-name">${item.tag.replace('<','&lt;').replace('>','&gt;')}</span></td>
+                    <td><span class="category-badge">${item.cat}</span></td>
+                    <td>${item.desc}</td>
+                    <td><div class="preview-box">${item.example}</div></td>
+                    <td><button class="copy-btn" onclick="copyTag('${item.tag}')">Copy Tag</button></td>
+                </tr>
+            `).join('');
+        }
+
+        function filterData() {
+            const searchTerm = searchInput.value.toLowerCase();
+            const activeCat = document.querySelector('.filter-btn.active').dataset.cat;
+
+            const filtered = htmlTags.filter(item => {
+                const matchesSearch = item.tag.toLowerCase().includes(searchTerm) || 
+                                     item.desc.toLowerCase().includes(searchTerm);
+                const matchesCat = activeCat === 'all' || item.cat === activeCat;
+                return matchesSearch && matchesCat;
+            });
+
+            renderTable(filtered);
+        }
+
+        searchInput.addEventListener('input', filterData);
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                filterData();
+            });
+        });
+
+        function copyTag(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                alert(`Copied ${text} to clipboard!`);
+            });
+        }
+
+        // Initial render
+        renderTable(htmlTags);
+    </script>
+</body>
+</html>
