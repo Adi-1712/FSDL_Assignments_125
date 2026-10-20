@@ -1,0 +1,76 @@
+* {
+    margin: 0%;
+    padding: 0%;
+    box-sizing: border-box;
+    font-family: Whitney, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
+      Helvetica, Arial, sans-serif;
+  }
+
+  #main-container {
+    width: 98%;
+    margin: 5px auto;
+    padding: auto 5%;
+  }
+
+  #main-container > div {
+    width: 100%;
+    margin: auto;
+  }
+
+  #main-container img {
+    cursor: pointer;
+  }
+
+  #crauser_1 > button:hover,
+  #crauser_2 > button:hover {
+    background-color: rgba(40, 24, 10, 0.8);
+  }
+
+  /* ===== TERMS CONTENT STYLING ===== */
+  #terms-container {
+    width: 70%;
+    margin: 40px auto;
+    line-height: 1.8;
+    padding: 20px 40px;
+    background-color: #fff;
+    border: 1px solid #eee;
+    border-radius: 8px;
+  }
+
+  #terms-container h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    text-align: center;
+    color: #333;
+  }
+
+  #terms-container p {
+    margin-bottom: 15px;
+    font-size: 15px;
+    color: #555;
+    text-align: justify;
+  }
+  /* ===== END TERMS STYLING ===== */
+
+  #end-container {
+    background-color: #fafbfc;
+    margin: 20px auto;
+    padding: 2% 5%;
+  }
+
+  #table {
+    width: 50%;
+    text-align: left;
+    font-size: 18px;
+  }
+
+  #end-container > div:nth-child(2) {
+    width: 100%;
+    margin: auto;
+    line-height: 25px;
+    margin-top: 20px;
+  }
+
+  #end-container > div:nth-child(2) > h4 {
+    margin: 10px auto;
+  }
